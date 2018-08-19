@@ -1,122 +1,122 @@
-;; ѓOѓЌЃ[ѓoѓ‹•Пђ”‚М’и‹`
-;;   Ће‚ЙЃAѓvѓЌѓbѓg‚Ц‚М•\Ћ¦‚Й——p‚і‚к‚йЃB
+;; г‚°гѓ­гѓјгѓђгѓ«е¤‰ж•°гЃ®е®љзѕ©
+;;   дё»гЃ«гЂЃгѓ—гѓ­гѓѓгѓ€гЃёгЃ®иЎЁз¤єгЃ«е€©з”ЁгЃ•г‚Њг‚‹гЂ‚
 globals [
-  bank-loans                            ;; turtles ‚М loans ‚МЌ‡Њv
-  bank-reserves                         ;; ‹вЌs‚Є•Ы—L‚µ‚Д‚ў‚йЋ‘‹а‚М‚¤‚їЃA‘ЭЏo‚ЙЏ[‚Д‚з‚к‚И‚ў‹аЉz
-  bank-deposits                         ;; turtles ‚М savings ‚МЌ‡Њv
-  bank-to-loan                          ;; ‹вЌs‚Є•Ы—L‚µ‚Д‚ў‚йЋ‘‹а‚М‚¤‚їЃA‘ЭЏo‚ЙЏ[‚Д‚й‚±‚Ж‚Є‚Е‚«‚йЉzЃi—]—TЋ‘‹аЃj
-  x-max                                 ;; ѓvѓЌѓbѓg("Money & Loans", "Savings & Wallets", "Income Dist")‚М•\Ћ¦‚МXЋІ‚МЌЕ‘е’l (Џ‰Љъ’l 300, ѓvѓЌѓbѓg‚МЋ®:set-plot-x-range 0 x-max)
-  y-max                                 ;; ѓvѓЌѓbѓg("Money & Loans", "Savings & Wallets")‚М•\Ћ¦‚МYЋІ‚МЌЕ‘е’l (Џ‰Љъ’l: 2 * money-total, ѓvѓЌѓbѓg‚МЋ®: set-plot-y-range -50 y-max)
-  rich                                  ;; ѓvѓЌѓbѓg("Income Dist")‚Мrich‚Мђ” (ѓvѓЌѓbѓg‚МЋ®: plot rich)
-  poor                                  ;; ѓvѓЌѓbѓg("Income Dist")‚Мpoor‚Мђ” (ѓvѓЌѓbѓg‚МЋ®: plot poor)
-  middle-class                          ;; ѓvѓЌѓbѓg("Income Dist")‚Мmiddle-class‚Мђ”(ѓvѓЌѓbѓg‚МЋ®: plot middle-class)
-  rich-threshold                        ;; rich‚Ми‡’lЃBinitialize-variablesЉЦђ”‚Е10‚ЙђЭ’и‚і‚к‚йЃB‚Ь‚ЅЃAsetup-turtles‚Еwallet‚МЏ‰Љъ’l‚рЊ€‚Я‚й)
+  bank-loans                            ;; turtles гЃ® loans гЃ®еђ€иЁ€
+  bank-reserves                         ;; йЉЂиЎЊгЃЊдїќжњ‰гЃ—гЃ¦гЃ„г‚‹иі‡й‡‘гЃ®гЃ†гЃЎгЂЃиІёе‡єгЃ«е……гЃ¦г‚‰г‚ЊгЃЄгЃ„й‡‘йЎЌ
+  bank-deposits                         ;; turtles гЃ® savings гЃ®еђ€иЁ€
+  bank-to-loan                          ;; йЉЂиЎЊгЃЊдїќжњ‰гЃ—гЃ¦гЃ„г‚‹иі‡й‡‘гЃ®гЃ†гЃЎгЂЃиІёе‡єгЃ«е……гЃ¦г‚‹гЃ“гЃЁгЃЊгЃ§гЃЌг‚‹йЎЌпј€дЅ™иЈ•иі‡й‡‘пј‰
+  x-max                                 ;; гѓ—гѓ­гѓѓгѓ€("Money & Loans", "Savings & Wallets", "Income Dist")гЃ®иЎЁз¤єгЃ®Xи»ёгЃ®жњЂе¤§еЂ¤ (е€ќжњџеЂ¤ 300, гѓ—гѓ­гѓѓгѓ€гЃ®ејЏ:set-plot-x-range 0 x-max)
+  y-max                                 ;; гѓ—гѓ­гѓѓгѓ€("Money & Loans", "Savings & Wallets")гЃ®иЎЁз¤єгЃ®Yи»ёгЃ®жњЂе¤§еЂ¤ (е€ќжњџеЂ¤: 2 * money-total, гѓ—гѓ­гѓѓгѓ€гЃ®ејЏ: set-plot-y-range -50 y-max)
+  rich                                  ;; гѓ—гѓ­гѓѓгѓ€("Income Dist")гЃ®richгЃ®ж•° (гѓ—гѓ­гѓѓгѓ€гЃ®ејЏ: plot rich)
+  poor                                  ;; гѓ—гѓ­гѓѓгѓ€("Income Dist")гЃ®poorгЃ®ж•° (гѓ—гѓ­гѓѓгѓ€гЃ®ејЏ: plot poor)
+  middle-class                          ;; гѓ—гѓ­гѓѓгѓ€("Income Dist")гЃ®middle-classгЃ®ж•°(гѓ—гѓ­гѓѓгѓ€гЃ®ејЏ: plot middle-class)
+  rich-threshold                        ;; richгЃ®й–ѕеЂ¤гЂ‚initialize-variablesй–ўж•°гЃ§10гЃ«иЁ­е®љгЃ•г‚Њг‚‹гЂ‚гЃѕгЃџгЂЃsetup-turtlesгЃ§walletгЃ®е€ќжњџеЂ¤г‚’ж±єг‚Ѓг‚‹)
 ]
 
-;; turtle‚М•Пђ”
-;;   turtle‚ЄЋќ‚В“Бђ«‚р•\Њ»‚·‚й‚Ѕ‚Я‚Й——p‚і‚к‚йЃB€И‰єЃAturtle‚М"‘®ђ«"‚ЖЊДЏМ‚·‚йЃB
+;; turtleгЃ®е¤‰ж•°
+;;   turtleгЃЊжЊЃгЃ¤з‰№жЂ§г‚’иЎЁзЏѕгЃ™г‚‹гЃџг‚ЃгЃ«е€©з”ЁгЃ•г‚Њг‚‹гЂ‚д»Ґдё‹гЂЃturtleгЃ®"е±ћжЂ§"гЃЁе‘јз§°гЃ™г‚‹гЂ‚
 turtles-own [
-  savings                               ;; turtle ‚М saving ‘®ђ«
-  loans                                 ;; turtle ‚М loans ‘®ђ«
-  wallet                                ;; turtle ‚М wallet ‘®ђ«
-  temp-loan                             ;; balance-booksЉЦђ”“™‚ЕЋg—p‚·‚й‘®ђ«ЃBtemp-loan = amount available to borrow
-  wealth                                ;; savings - loans‚М’l‚рЋќ‚В‘®ђ«ЃBѓvѓЌѓbѓg("Wealth Distribution Histogram")‚ЕѓqѓXѓgѓOѓ‰ѓЂ‚рЌм‚й‚М‚Й——p‚і‚к‚йЃB
-  customer                              ;; do-businessЉЦђ”‚Е——p‚·‚й‘®ђ«ЃBturtleЋ©ђg‚МЊ»ЌЭ’n‚Й‘ј‚Мturtle‚Є‚ў‚й‚©‚З‚¤‚©‚р•\‚н‚·(one-of other turtles-here)ЃB
+  savings                               ;; turtle гЃ® saving е±ћжЂ§
+  loans                                 ;; turtle гЃ® loans е±ћжЂ§
+  wallet                                ;; turtle гЃ® wallet е±ћжЂ§
+  temp-loan                             ;; balance-booksй–ўж•°з­‰гЃ§дЅїз”ЁгЃ™г‚‹е±ћжЂ§гЂ‚temp-loan = amount available to borrow
+  wealth                                ;; savings - loansгЃ®еЂ¤г‚’жЊЃгЃ¤е±ћжЂ§гЂ‚гѓ—гѓ­гѓѓгѓ€("Wealth Distribution Histogram")гЃ§гѓ’г‚№гѓ€г‚°гѓ©гѓ г‚’дЅњг‚‹гЃ®гЃ«е€©з”ЁгЃ•г‚Њг‚‹гЂ‚
+  customer                              ;; do-businessй–ўж•°гЃ§е€©з”ЁгЃ™г‚‹е±ћжЂ§гЂ‚turtleи‡Єиє«гЃ®зЏѕењЁењ°гЃ«д»–гЃ®turtleгЃЊгЃ„г‚‹гЃ‹гЃ©гЃ†гЃ‹г‚’иЎЁг‚ЏгЃ™(one-of other turtles-here)гЂ‚
 ]
 
-;; SetupЉЦђ”
-;;   Setupѓ{ѓ^ѓ“‚р‰џ‚µ‚Ѕ‚Ж‚«‚ЙЊД‚О‚к‚йЏ‰Љъ‰»‚М‚Ѕ‚Я‚МЉЦђ”ЃB
+;; Setupй–ўж•°
+;;   Setupгѓњг‚їгѓіг‚’жЉјгЃ—гЃџгЃЁгЃЌгЃ«е‘јгЃ°г‚Њг‚‹е€ќжњџеЊ–гЃ®гЃџг‚ЃгЃ®й–ўж•°гЂ‚
 to setup
-  clear-all                             ;; ‚·‚Ч‚Д‚рЌнЏњ‚·‚й
-  initialize-variables                  ;; ѓvѓЌѓbѓg‚ЙЉЦ‚·‚йѓOѓЌЃ[ѓoѓ‹•Пђ”( rich, middle-class , poor, rich-threshold)‚МЏ‰Љъ‰»
-  ask patches [set pcolor black]        ;; ѓpѓbѓ`(”wЊi)‚рЌ•‚Й‚·‚й
-  set-default-shape turtles "person"    ;; turtle‚МЊ`‚р"ђl"‚Й‚·‚й
-  create-turtles people [setup-turtles] ;; ѓXѓ‰ѓCѓ_Ѓ[‚Мpeople•Пђ”‚Мђ”•ЄЃAsetup-turtlesЉЦђ”‚ЕЏ‰Љъ‰»‚µ‚Ѕturtle‚рЌмђ¬‚·‚йЃB
-  setup-bank                            ;; bank‚ЙЉЦ‚·‚й•Пђ”(bank-loans, bank-reserves, bank-deposits, bank-to-loan)‚МЏ‰Љъ‰»
-  set x-max 300                         ;; ѓvѓЌѓbѓg‚МXЋІ‚Мx-maxѓOѓЌЃ[ѓoѓ‹•Пђ”‚МЏ‰Љъ’l‚рђЭ’и‚·‚й
-  set y-max 2 * money-total             ;; ѓvѓЌѓbѓg‚МYЋІ‚Мy-maxѓOѓЌЃ[ѓoѓ‹•Пђ”‚МЏ‰Љъ’l‚рђЭ’и‚·‚й ( money-total ‚М 2”{‚ЙђЭ’и‚·‚й )
-  reset-ticks                           ;; tick ‚рѓЉѓZѓbѓg‚·‚й
+  clear-all                             ;; гЃ™гЃ№гЃ¦г‚’е‰Љй™¤гЃ™г‚‹
+  initialize-variables                  ;; гѓ—гѓ­гѓѓгѓ€гЃ«й–ўгЃ™г‚‹г‚°гѓ­гѓјгѓђгѓ«е¤‰ж•°( rich, middle-class , poor, rich-threshold)гЃ®е€ќжњџеЊ–
+  ask patches [set pcolor black]        ;; гѓ‘гѓѓгѓЃ(иѓЊж™Ї)г‚’й»’гЃ«гЃ™г‚‹
+  set-default-shape turtles "person"    ;; turtleгЃ®еЅўг‚’"дєє"гЃ«гЃ™г‚‹
+  create-turtles people [setup-turtles] ;; г‚№гѓ©г‚¤гѓЂгѓјгЃ®peopleе¤‰ж•°гЃ®ж•°е€†гЂЃsetup-turtlesй–ўж•°гЃ§е€ќжњџеЊ–гЃ—гЃџturtleг‚’дЅњж€ђгЃ™г‚‹гЂ‚
+  setup-bank                            ;; bankгЃ«й–ўгЃ™г‚‹е¤‰ж•°(bank-loans, bank-reserves, bank-deposits, bank-to-loan)гЃ®е€ќжњџеЊ–
+  set x-max 300                         ;; гѓ—гѓ­гѓѓгѓ€гЃ®Xи»ёгЃ®x-maxг‚°гѓ­гѓјгѓђгѓ«е¤‰ж•°гЃ®е€ќжњџеЂ¤г‚’иЁ­е®љгЃ™г‚‹
+  set y-max 2 * money-total             ;; гѓ—гѓ­гѓѓгѓ€гЃ®Yи»ёгЃ®y-maxг‚°гѓ­гѓјгѓђгѓ«е¤‰ж•°гЃ®е€ќжњџеЂ¤г‚’иЁ­е®љгЃ™г‚‹ ( money-total гЃ® 2еЂЌгЃ«иЁ­е®љгЃ™г‚‹ )
+  reset-ticks                           ;; tick г‚’гѓЄг‚»гѓѓгѓ€гЃ™г‚‹
 end
 
-;; turtle‚ЙЉЦ‚·‚й•Пђ”(‘®ђ«)‚МЏ‰Љъ‰»‚МЉЦђ”
-to setup-turtles  ;; turtle procedure   ;; ‚ ‚йturtle‚МЏ€—ќ
-  set color blue                        ;; turtle‚рђВ‚Й‚·‚й
-  setxy random-xcor random-ycor         ;; turtle‚рWorldЏг‚Йѓ‰ѓ“ѓ_ѓЂ‚Й”z’u‚·‚й
-  set wallet (random rich-threshold) + 1 ;;limit money to threshold ;; wallet‚р1 Ѓ` 10(rich-threshold)‚Ь‚Е‚МЉФ‚ЕЏ‰Љъ‰»‚·‚й
-  set savings 0                         ;; savings ‘®ђ«‚МЏ‰Љъ‰»
-  set loans 0                           ;; loans ‘®ђ«‚МЏ‰Љъ‰»
-  set wealth 0                          ;; wealth ‘®ђ«‚МЏ‰Љъ‰»
-  set customer -1                       ;; customer ‘®ђ«‚МЏ‰Љъ‰» (-1: ‘ј‚Мturtle‚Є“Ї‚¶ЏкЏЉ‚Й‚Н‚ў‚И‚ў)
+;; turtleгЃ«й–ўгЃ™г‚‹е¤‰ж•°(е±ћжЂ§)гЃ®е€ќжњџеЊ–гЃ®й–ўж•°
+to setup-turtles  ;; turtle procedure   ;; гЃ‚г‚‹turtleгЃ®е‡¦зђ†
+  set color blue                        ;; turtleг‚’йќ’гЃ«гЃ™г‚‹
+  setxy random-xcor random-ycor         ;; turtleг‚’WorldдёЉгЃ«гѓ©гѓігѓЂгѓ гЃ«й…ЌзЅ®гЃ™г‚‹
+  set wallet (random rich-threshold) + 1 ;;limit money to threshold ;; walletг‚’1 пЅћ 10(rich-threshold)гЃѕгЃ§гЃ®й–“гЃ§е€ќжњџеЊ–гЃ™г‚‹
+  set savings 0                         ;; savings е±ћжЂ§гЃ®е€ќжњџеЊ–
+  set loans 0                           ;; loans е±ћжЂ§гЃ®е€ќжњџеЊ–
+  set wealth 0                          ;; wealth е±ћжЂ§гЃ®е€ќжњџеЊ–
+  set customer -1                       ;; customer е±ћжЂ§гЃ®е€ќжњџеЊ– (-1: д»–гЃ®turtleгЃЊеђЊгЃе ґж‰ЂгЃ«гЃЇгЃ„гЃЄгЃ„)
 end
 
-;; bank‚ЙЉЦ‚·‚й•Пђ”‚МЏ‰Љъ‰»‚МЉЦђ”
+;; bankгЃ«й–ўгЃ™г‚‹е¤‰ж•°гЃ®е€ќжњџеЊ–гЃ®й–ўж•°
 to setup-bank ;;initialize bank
-  set bank-loans 0                      ;; bank-loansѓOѓЌЃ[ѓoѓ‹•Пђ”‚МЏ‰Љъ‰»
-  set bank-reserves 0                   ;; bank-reservesѓOѓЌЃ[ѓoѓ‹•Пђ”‚МЏ‰Љъ‰»
-  set bank-deposits 0                   ;; bank-depositsѓOѓЌЃ[ѓoѓ‹•Пђ”‚МЏ‰Љъ‰»
-  set bank-to-loan 0                    ;; bank-to-loanѓOѓЌЃ[ѓoѓ‹•Пђ”‚МЏ‰Љъ‰»
+  set bank-loans 0                      ;; bank-loansг‚°гѓ­гѓјгѓђгѓ«е¤‰ж•°гЃ®е€ќжњџеЊ–
+  set bank-reserves 0                   ;; bank-reservesг‚°гѓ­гѓјгѓђгѓ«е¤‰ж•°гЃ®е€ќжњџеЊ–
+  set bank-deposits 0                   ;; bank-depositsг‚°гѓ­гѓјгѓђгѓ«е¤‰ж•°гЃ®е€ќжњџеЊ–
+  set bank-to-loan 0                    ;; bank-to-loanг‚°гѓ­гѓјгѓђгѓ«е¤‰ж•°гЃ®е€ќжњџеЊ–
 end
 
-;; ѓvѓЌѓbѓg‚ЙЉЦ‚·‚й•Пђ”‚МЏ‰Љъ‰»‚МЉЦђ”
+;; гѓ—гѓ­гѓѓгѓ€гЃ«й–ўгЃ™г‚‹е¤‰ж•°гЃ®е€ќжњџеЊ–гЃ®й–ўж•°
 to initialize-variables
-  set rich 0                            ;; richѓOѓЌЃ[ѓoѓ‹•Пђ”‚МЏ‰Љъ‰»
-  set middle-class 0                    ;; middle-classѓOѓЌЃ[ѓoѓ‹•Пђ”‚МЏ‰Љъ‰»
-  set poor 0                            ;; poorѓOѓЌЃ[ѓoѓ‹•Пђ”‚МЏ‰Љъ‰»
-  set rich-threshold 10                 ;; rich-thresholdѓOѓЌЃ[ѓoѓ‹•Пђ”‚МЏ‰Љъ‰»
+  set rich 0                            ;; richг‚°гѓ­гѓјгѓђгѓ«е¤‰ж•°гЃ®е€ќжњџеЊ–
+  set middle-class 0                    ;; middle-classг‚°гѓ­гѓјгѓђгѓ«е¤‰ж•°гЃ®е€ќжњџеЊ–
+  set poor 0                            ;; poorг‚°гѓ­гѓјгѓђгѓ«е¤‰ж•°гЃ®е€ќжњџеЊ–
+  set rich-threshold 10                 ;; rich-thresholdг‚°гѓ­гѓјгѓђгѓ«е¤‰ж•°гЃ®е€ќжњџеЊ–
 end
 
-;; turtle‚МђF‚рsavings, loans‚М’l‚Й‰ћ‚¶‚Д•ПЌX‚·‚йЉЦђ”
-to get-shape  ;;turtle procedure        ;; ‚ ‚йturtle‚МЏ€—ќ
-  if (savings > 10)  [set color green]  ;; ‚а‚µЃAsavings‚Є10€ИЏг‚Е‚ ‚й‚И‚з‚ОЃAturtle‚МђF‚р—О‚Й‚·‚й
-  if (loans > 10) [set color red]       ;; ‚а‚µЃAloans‚Є10€ИЏг‚Е‚ ‚й‚И‚з‚ОЃAturtle‚МђF‚рђФ‚Й‚·‚й
-  set wealth (savings - loans)          ;; wealth•Пђ”
+;; turtleгЃ®и‰Іг‚’savings, loansгЃ®еЂ¤гЃ«еїњгЃгЃ¦е¤‰ж›ґгЃ™г‚‹й–ўж•°
+to get-shape  ;;turtle procedure        ;; гЃ‚г‚‹turtleгЃ®е‡¦зђ†
+  if (savings > 10)  [set color green]  ;; г‚‚гЃ—гЂЃsavingsгЃЊ10д»ҐдёЉгЃ§гЃ‚г‚‹гЃЄг‚‰гЃ°гЂЃturtleгЃ®и‰Іг‚’з·‘гЃ«гЃ™г‚‹
+  if (loans > 10) [set color red]       ;; г‚‚гЃ—гЂЃloansгЃЊ10д»ҐдёЉгЃ§гЃ‚г‚‹гЃЄг‚‰гЃ°гЂЃturtleгЃ®и‰Іг‚’иµ¤гЃ«гЃ™г‚‹
+  set wealth (savings - loans)          ;; wealthе¤‰ж•°
 end
 
-;; go ѓ{ѓ^ѓ“‚р‰џ‚µ‚Ѕ‚Ж‚«‚ЙЊД‚О‚к‚йNetlog‚МѓvѓЌѓOѓ‰ѓЂђiЌs‚М‚Ѕ‚Я‚МЉЦђ”
-;;   tickЉЦђ”‚Й‚ж‚иѓVѓ~ѓ…ѓЊЃ[ѓVѓ‡ѓ“‚Є1‚В‚ё‚ВђiЌs‚·‚йЃBѓVѓ~ѓ…ѓЊЃ[ѓVѓ‡ѓ“‚Мђi‚с‚ѕђ”‚рticks‚ЕЋж“ѕ‚«‚йЃB(€И‰єticksђ”‚ЖЊД‚Ф)
-;;   ticksђ”‚р3‚ЕЉ„‚Б‚Ѕ—]‚и‚рѓ`ѓFѓbѓN‚·‚й‚±‚Ж‚ЕЃA€И‰є‚М‚R‚В‚Мѓ^Ѓ[ѓ“‚Й•Є‚Ї‚ДѓVѓ~ѓ…ѓЊЃ[ѓVѓ‡ѓ“‚НђiЌs‚·‚йЃB
-;;     —]‚и 0 : do-bussinessЉЦђ”‚рЊД‚с‚ЕЃAturtle‚МѓrѓWѓlѓX‚рЌs‚¤
-;;     —]‚и 1 : balance-bookЉЦђ”‚Жget-shapeЉЦђ”‚рЊД‚с‚ЕЃAturtle‚М‚Ё‹а‚МЊvЋZ‚ЖђF‚р•П‚¦‚й
-;;     —]‚и 2(Џг‹L€ИЉO) : bank-balance-sheetЉЦђ”‚рЊД‚с‚ЕЃAsavings‚вloan‚М‘ЌЉz“™‚рЊvЋZ‚·‚й
+;; go гѓњг‚їгѓіг‚’жЉјгЃ—гЃџгЃЁгЃЌгЃ«е‘јгЃ°г‚Њг‚‹NetlogгЃ®гѓ—гѓ­г‚°гѓ©гѓ йЂІиЎЊгЃ®гЃџг‚ЃгЃ®й–ўж•°
+;;   tickй–ўж•°гЃ«г‚€г‚Љг‚·гѓџгѓҐгѓ¬гѓјг‚·гѓ§гѓігЃЊ1гЃ¤гЃљгЃ¤йЂІиЎЊгЃ™г‚‹гЂ‚г‚·гѓџгѓҐгѓ¬гѓјг‚·гѓ§гѓігЃ®йЂІг‚“гЃ ж•°г‚’ticksгЃ§еЏ–еѕ—гЃЌг‚‹гЂ‚(д»Ґдё‹ticksж•°гЃЁе‘јгЃ¶)
+;;   ticksж•°г‚’3гЃ§е‰ІгЃЈгЃџдЅ™г‚Љг‚’гѓЃг‚§гѓѓг‚ЇгЃ™г‚‹гЃ“гЃЁгЃ§гЂЃд»Ґдё‹гЃ®пј“гЃ¤гЃ®г‚їгѓјгѓігЃ«е€†гЃ‘гЃ¦г‚·гѓџгѓҐгѓ¬гѓјг‚·гѓ§гѓігЃЇйЂІиЎЊгЃ™г‚‹гЂ‚
+;;     дЅ™г‚Љ 0 : do-bussinessй–ўж•°г‚’е‘јг‚“гЃ§гЂЃturtleгЃ®гѓ“г‚ёгѓЌг‚№г‚’иЎЊгЃ†
+;;     дЅ™г‚Љ 1 : balance-bookй–ўж•°гЃЁget-shapeй–ўж•°г‚’е‘јг‚“гЃ§гЂЃturtleгЃ®гЃЉй‡‘гЃ®иЁ€з®—гЃЁи‰Іг‚’е¤‰гЃ€г‚‹
+;;     дЅ™г‚Љ 2(дёЉиЁд»Ґе¤–) : bank-balance-sheetй–ўж•°г‚’е‘јг‚“гЃ§гЂЃsavingsг‚„loanгЃ®з·ЏйЎЌз­‰г‚’иЁ€з®—гЃ™г‚‹
 ;;
 to go
   ;;tabulates each distinct class population
-  set rich (count turtles with [savings > rich-threshold]) ;; turtle‚Мsavings‚Єrich-threshold‚р’ґ‚¦‚йturtle‚Мђ”‚рѓJѓEѓ“ѓg‚µrichѓOѓЌЃ[ѓoѓ‹•Пђ”‚Й“ь‚к‚й
-  set poor (count turtles with [loans > 10])               ;; turtle‚Мloans‚Є10‚р’ґ‚¦‚йturtle‚Мђ”‚рѓJѓEѓ“ѓg‚µpoorѓOѓЌЃ[ѓoѓ‹•Пђ”‚Й“ь‚к‚й
-  set middle-class (count turtles - (rich + poor))         ;; turtle‚М‘Ќђ” - (rich‚Жpoor‚МЌ‡Њv)‚рmiddle-classѓOѓЌЃ[ѓoѓ‹•Пђ”‚Й“ь‚к‚й
-  ask turtles [                                            ;; ‚ ‚йturtle‚рЏ‡”Ф‚ЙЋж‚иЏo‚µЃAЉe•Пђ”‚Й•ПЌX‚р‰Б‚¦‚йЃBѓVѓ~ѓ…ѓЊЃ[ѓVѓ‡ѓ“ђiЌs‚рЋi‚йЏ€—ќЃB
-    ifelse ticks mod 3 = 0                                 ;; ‚а‚µЃAticksђ”‚р3‚ЕЉ„‚иЃA—]‚и‚Є0‚©‚З‚¤‚©‚рѓ`ѓFѓbѓN‚µ...(1)
-      [do-business] ;;first cycle, "do business"           ;; (1)‚Єђ^‚Е‚ ‚йЏкЌ‡ЃAdo-businessЉЦђ”‚рЋАЌs‚·‚й
-      [ifelse ticks mod 3 = 1  ;;second cycle, "balance books" and "get shape" ;; (1)‚Є‹U‚Е‚ ‚йЏкЌ‡ЃAticksђ”‚р3‚ЕЉ„‚иЃA—]‚и‚Є1‚Е‚ ‚й‚©ѓ`ѓFѓbѓN‚µ...(2)
-         [balance-books                                    ;; (2)‚Єђ^‚Е‚ ‚йЏкЌ‡ЃAbalance-booksЉЦђ”‚рЋАЌs‚·‚й
-          get-shape]                                       ;; (2)‚Єђ^‚Е‚ ‚йЏкЌ‡ЃAget-shapeЉЦђ”‚рЋАЌs‚·‚й
-         [bank-balance-sheet] ;;third cycle, "bank balance sheet" ;; Џг‹L€ИЉO(ticksђ”‚р3‚ЕЉ„‚и—]‚и‚Є2‚Е‚ ‚йЏкЌ‡ЃAbank-balance-sheetЉЦђ”‚рЋАЌs‚·‚й
-      ]                                                    ;; (2)‚М”Н€Н‚МЏI—№
-  ]                                                        ;; (1)‚М”Н€Н‚МЏI—№
-  tick                                                     ;; tick‚ЕѓVѓ~ѓ…ѓЊЃ[ѓVѓ‡ѓ“‚р1‚Вђi‚Я‚й
+  set rich (count turtles with [savings > rich-threshold]) ;; turtleгЃ®savingsгЃЊrich-thresholdг‚’и¶…гЃ€г‚‹turtleгЃ®ж•°г‚’г‚«г‚¦гѓігѓ€гЃ—richг‚°гѓ­гѓјгѓђгѓ«е¤‰ж•°гЃ«е…Ґг‚Њг‚‹
+  set poor (count turtles with [loans > 10])               ;; turtleгЃ®loansгЃЊ10г‚’и¶…гЃ€г‚‹turtleгЃ®ж•°г‚’г‚«г‚¦гѓігѓ€гЃ—poorг‚°гѓ­гѓјгѓђгѓ«е¤‰ж•°гЃ«е…Ґг‚Њг‚‹
+  set middle-class (count turtles - (rich + poor))         ;; turtleгЃ®з·Џж•° - (richгЃЁpoorгЃ®еђ€иЁ€)г‚’middle-classг‚°гѓ­гѓјгѓђгѓ«е¤‰ж•°гЃ«е…Ґг‚Њг‚‹
+  ask turtles [                                            ;; гЃ‚г‚‹turtleг‚’й †з•ЄгЃ«еЏ–г‚Ље‡єгЃ—гЂЃеђ„е¤‰ж•°гЃ«е¤‰ж›ґг‚’еЉ гЃ€г‚‹гЂ‚г‚·гѓџгѓҐгѓ¬гѓјг‚·гѓ§гѓійЂІиЎЊг‚’еЏёг‚‹е‡¦зђ†гЂ‚
+    ifelse ticks mod 3 = 0                                 ;; г‚‚гЃ—гЂЃticksж•°г‚’3гЃ§е‰Іг‚ЉгЂЃдЅ™г‚ЉгЃЊ0гЃ‹гЃ©гЃ†гЃ‹г‚’гѓЃг‚§гѓѓг‚ЇгЃ—...(1)
+      [do-business] ;;first cycle, "do business"           ;; (1)гЃЊзњџгЃ§гЃ‚г‚‹е ґеђ€гЂЃdo-businessй–ўж•°г‚’е®џиЎЊгЃ™г‚‹
+      [ifelse ticks mod 3 = 1  ;;second cycle, "balance books" and "get shape" ;; (1)гЃЊеЃЅгЃ§гЃ‚г‚‹е ґеђ€гЂЃticksж•°г‚’3гЃ§е‰Іг‚ЉгЂЃдЅ™г‚ЉгЃЊ1гЃ§гЃ‚г‚‹гЃ‹гѓЃг‚§гѓѓг‚ЇгЃ—...(2)
+         [balance-books                                    ;; (2)гЃЊзњџгЃ§гЃ‚г‚‹е ґеђ€гЂЃbalance-booksй–ўж•°г‚’е®џиЎЊгЃ™г‚‹
+          get-shape]                                       ;; (2)гЃЊзњџгЃ§гЃ‚г‚‹е ґеђ€гЂЃget-shapeй–ўж•°г‚’е®џиЎЊгЃ™г‚‹
+         [bank-balance-sheet] ;;third cycle, "bank balance sheet" ;; дёЉиЁд»Ґе¤–(ticksж•°г‚’3гЃ§е‰Іг‚ЉдЅ™г‚ЉгЃЊ2гЃ§гЃ‚г‚‹е ґеђ€гЂЃbank-balance-sheetй–ўж•°г‚’е®џиЎЊгЃ™г‚‹
+      ]                                                    ;; (2)гЃ®зЇ„е›ІгЃ®зµ‚дє†
+  ]                                                        ;; (1)гЃ®зЇ„е›ІгЃ®зµ‚дє†
+  tick                                                     ;; tickгЃ§г‚·гѓџгѓҐгѓ¬гѓјг‚·гѓ§гѓіг‚’1гЃ¤йЂІг‚Ѓг‚‹
 end
 
-;; turtle‚МѓrѓWѓlѓX‚МЉЦђ”
-to do-business  ;;turtle procedure      ;; ‚ ‚йturtle‚МЏ€—ќ
-  rt random-float 360                   ;; turtle‚МЊь‚«‚р•П‚¦‚й(0Ѓ`360‚М”Н€Н‚Е•‚“®ЏЉђ”“_‚рѓ‰ѓ“ѓ_ѓЂ‚ЙЊ€‚Я‚й)
-  fd 1                                  ;; turtle‚Є1‚В‘O‚Йђi‚Ю
+;; turtleгЃ®гѓ“г‚ёгѓЌг‚№гЃ®й–ўж•°
+to do-business  ;;turtle procedure      ;; гЃ‚г‚‹turtleгЃ®е‡¦зђ†
+  rt random-float 360                   ;; turtleгЃ®еђ‘гЃЌг‚’е¤‰гЃ€г‚‹(0пЅћ360гЃ®зЇ„е›ІгЃ§жµ®е‹•ж‰Ђж•°з‚№г‚’гѓ©гѓігѓЂгѓ гЃ«ж±єг‚Ѓг‚‹)
+  fd 1                                  ;; turtleгЃЊ1гЃ¤е‰ЌгЃ«йЂІг‚Ђ
 
-  if ((savings > 0) or (wallet > 0) or (bank-to-loan > 0))  ;; ‚а‚µЃAsavingsЃAwalletЃAbank-to-loan‚М‚ў‚ё‚к‚©‚Є0‚ж‚и‘е‚«‚ў‚©ѓ`ѓFѓbѓN‚µ...(3)
-    [set customer one-of other turtles-here  ;; (3)‚Єђ^‚Е‚ ‚йЏкЌ‡ЃAturtle‚МЊ»ЌЭ’n‚Й‘ј‚Мturtle‚М‚P‚В‚рcustomer‚Й“ь‚к‚й(‚ў‚И‚ўЏкЌ‡‚Нnobody‚Й‚И‚й)
-     if customer != nobody              ;; ‚а‚µЃAcustomer‚Єnobody‚Ж“™‚µ‚­‚И‚ў‚©ѓ`ѓFѓbѓN‚µ...(4)
-     [if (random 2) = 0                 ;; 50% chance of trading with customer ;; ‚а‚µЃA(4)‚Єђ^‚Е‚ ‚йЏкЌ‡ЃAѓ‰ѓ“ѓ_ѓЂ‚Й0Ѓ`2‚ж‚и‚аЏ¬‚і‚ў’l({0,1}) ‚рђ¶ђ¬‚µЃA0‚Е‚ ‚й‚©ѓ`ѓFѓbѓN‚µ...(5)(‚·‚И‚н‚ї50%‚МЉm—¦‚Е)
-           [ifelse (random 2) = 0       ;; 50% chance of trading $5 or $2      ;; (5)‚Єђ^‚Е‚ ‚йЏкЌ‡ЃAѓ‰ѓ“ѓ_ѓЂ‚Й0Ѓ`2‚ж‚и‚аЏ¬‚і‚ў’l({0,1})‚рђ¶ђ¬‚µЃA0‚Е‚ ‚й‚©ѓ`ѓFѓbѓN‚µ...(6)(‚·‚И‚н‚ї50%‚МЉm—¦‚Е)
-              [ask customer [set wallet wallet + 5] ;;give 5 to customer            ;; (6)‚Єђ^‚Е‚ ‚йЏкЌ‡ЃAcustomer‚Мwallet‚Й5‚р‘«‚·
-               set wallet (wallet - 5) ];;take 5 from wallet                       ;; Џг‹L‚МЏрЊЏ‚М‘±‚«‚ЕЃAЋ©ђg‚Мwallet‚©‚з5‚р€ш‚­
-              [ask customer [set wallet wallet + 2] ;;give 2 to customer            ;; (6)‚Є‹U‚Е‚ ‚йЏкЌ‡ЃAcustomer‚Мwallet‚Й2‚р‘«‚·
-               set wallet (wallet - 2) ];;take 2 from wallet                       ;; Џг‹L‚МЏрЊЏ‚М‘±‚«‚ЕЃAЋ©ђg‚Мwallet‚©‚з2‚р€ш‚­
-           ]                            ;; (5)‚М”Н€Н‚МЏI—№
-        ]                               ;; (4)‚М”Н€Н‚МЏI—№
-     ]                                  ;; (3)‚М”Н€Н‚МЏI—№
+  if ((savings > 0) or (wallet > 0) or (bank-to-loan > 0))  ;; г‚‚гЃ—гЂЃsavingsгЂЃwalletгЂЃbank-to-loanгЃ®гЃ„гЃљг‚ЊгЃ‹гЃЊ0г‚€г‚Ље¤§гЃЌгЃ„гЃ‹гѓЃг‚§гѓѓг‚ЇгЃ—...(3)
+    [set customer one-of other turtles-here  ;; (3)гЃЊзњџгЃ§гЃ‚г‚‹е ґеђ€гЂЃturtleгЃ®зЏѕењЁењ°гЃ«д»–гЃ®turtleгЃ®пј‘гЃ¤г‚’customerгЃ«е…Ґг‚Њг‚‹(гЃ„гЃЄгЃ„е ґеђ€гЃЇnobodyгЃ«гЃЄг‚‹)
+     if customer != nobody              ;; г‚‚гЃ—гЂЃcustomerгЃЊnobodyгЃЁз­‰гЃ—гЃЏгЃЄгЃ„гЃ‹гѓЃг‚§гѓѓг‚ЇгЃ—...(4)
+     [if (random 2) = 0                 ;; 50% chance of trading with customer ;; г‚‚гЃ—гЂЃ(4)гЃЊзњџгЃ§гЃ‚г‚‹е ґеђ€гЂЃгѓ©гѓігѓЂгѓ гЃ«0пЅћ2г‚€г‚Љг‚‚е°ЏгЃ•гЃ„еЂ¤({0,1}) г‚’з”џж€ђгЃ—гЂЃ0гЃ§гЃ‚г‚‹гЃ‹гѓЃг‚§гѓѓг‚ЇгЃ—...(5)(гЃ™гЃЄг‚ЏгЃЎ50%гЃ®зўєзЋ‡гЃ§)
+           [ifelse (random 2) = 0       ;; 50% chance of trading $5 or $2      ;; (5)гЃЊзњџгЃ§гЃ‚г‚‹е ґеђ€гЂЃгѓ©гѓігѓЂгѓ гЃ«0пЅћ2г‚€г‚Љг‚‚е°ЏгЃ•гЃ„еЂ¤({0,1})г‚’з”џж€ђгЃ—гЂЃ0гЃ§гЃ‚г‚‹гЃ‹гѓЃг‚§гѓѓг‚ЇгЃ—...(6)(гЃ™гЃЄг‚ЏгЃЎ50%гЃ®зўєзЋ‡гЃ§)
+              [ask customer [set wallet wallet + 5] ;;give 5 to customer            ;; (6)гЃЊзњџгЃ§гЃ‚г‚‹е ґеђ€гЂЃcustomerгЃ®walletгЃ«5г‚’и¶ігЃ™
+               set wallet (wallet - 5) ];;take 5 from wallet                       ;; дёЉиЁгЃ®жќЎд»¶гЃ®з¶љгЃЌгЃ§гЂЃи‡Єиє«гЃ®walletгЃ‹г‚‰5г‚’еј•гЃЏ
+              [ask customer [set wallet wallet + 2] ;;give 2 to customer            ;; (6)гЃЊеЃЅгЃ§гЃ‚г‚‹е ґеђ€гЂЃcustomerгЃ®walletгЃ«2г‚’и¶ігЃ™
+               set wallet (wallet - 2) ];;take 2 from wallet                       ;; дёЉиЁгЃ®жќЎд»¶гЃ®з¶љгЃЌгЃ§гЂЃи‡Єиє«гЃ®walletгЃ‹г‚‰2г‚’еј•гЃЏ
+           ]                            ;; (5)гЃ®зЇ„е›ІгЃ®зµ‚дє†
+        ]                               ;; (4)гЃ®зЇ„е›ІгЃ®зµ‚дє†
+     ]                                  ;; (3)гЃ®зЇ„е›ІгЃ®зµ‚дє†
 end
 
 
-;; Turtle‚Мwallet, savings, loans‚М‚в‚иЋж‚и‚р‚·‚йЉЦђ”
+;; TurtleгЃ®wallet, savings, loansгЃ®г‚„г‚ЉеЏ–г‚Љг‚’гЃ™г‚‹й–ўж•°
 ;;
 ;; First checks balance of the turtle's wallet, and then either puts
 ;; a positive balance in savings, or tries to get a loan to cover
@@ -126,16 +126,16 @@ end
 ;; proceed to pay as much of that loan off as possible from the money
 ;; in savings.
 to balance-books
-  ifelse (wallet < 0)                   ;; ‚а‚µЃAwallet‚Є0‚ж‚и‚а‘е‚«‚ў‚©ѓ`ѓFѓbѓN‚µ...(7)
-    [ifelse (savings >= (- wallet))     ;; (7)‚Єђ^‚Е‚ ‚й‚И‚з‚О(wallet‚Є•‰‚Е‚ ‚й)ЃA‚а‚µЃAsavings‚Є(•‰‚М’l‚рђі‚М’l‚Й•ПЉ·‚µ‚Ѕ)wallet€ИЏг‚Е‚ ‚й‚©ѓ`ѓFѓbѓN‚µ...(8)
-       [withdraw-from-savings (- wallet)]   ;; (8)‚Єђ^‚Е‚ ‚й‚з‚И‚ОЃAwithdraw-from-savingsЉЦђ”(€шђ”‚М‹аЉz•ЄЃAwallet‚Й‘«‚µЃAsaving‚©‚з€ш‚­)‚рЋАЌs‚·‚йЃB‚±‚М‚Ж‚«ЃA(•‰‚М’l‚рђі‚М’l‚Й•ПЉ·‚µ‚Ѕ)wallet‚р€шђ”‚Й“n‚·ЃB
-       [if (savings > 0)                ;; ‚а‚µЃAsavings‚Є0‚ж‚и‘е‚«‚ў‚©ѓ`ѓFѓbѓN‚µ...(9)
-          [withdraw-from-savings savings]   ;; (9)‚Єђ^‚Е‚ ‚й‚И‚з‚ОЃAwithdraw-from-savingsЉЦђ”(€шђ”‚М‹аЉz•ЄЃAwallet‚Й‘«‚µЃAsaving‚©‚з€ш‚­)‚рЋАЌs‚·‚йЃB‚±‚М‚Ж‚«ЃA(•‰‚М’l‚рђі‚М’l‚Й•ПЉ·‚µ‚Ѕ)wallet‚р€шђ”‚Й“n‚·ЃB
+  ifelse (wallet < 0)                   ;; г‚‚гЃ—гЂЃwalletгЃЊ0г‚€г‚Љг‚‚е¤§гЃЌгЃ„гЃ‹гѓЃг‚§гѓѓг‚ЇгЃ—...(7)
+    [ifelse (savings >= (- wallet))     ;; (7)гЃЊзњџгЃ§гЃ‚г‚‹гЃЄг‚‰гЃ°(walletгЃЊиІ гЃ§гЃ‚г‚‹)гЂЃг‚‚гЃ—гЂЃsavingsгЃЊ(иІ гЃ®еЂ¤г‚’ж­ЈгЃ®еЂ¤гЃ«е¤‰жЏ›гЃ—гЃџ)walletд»ҐдёЉгЃ§гЃ‚г‚‹гЃ‹гѓЃг‚§гѓѓг‚ЇгЃ—...(8)
+       [withdraw-from-savings (- wallet)]   ;; (8)гЃЊзњџгЃ§гЃ‚г‚‹г‚‰гЃЄгЃ°гЂЃwithdraw-from-savingsй–ўж•°(еј•ж•°гЃ®й‡‘йЎЌе€†гЂЃwalletгЃ«и¶ігЃ—гЂЃsavingгЃ‹г‚‰еј•гЃЏ)г‚’е®џиЎЊгЃ™г‚‹гЂ‚гЃ“гЃ®гЃЁгЃЌгЂЃ(иІ гЃ®еЂ¤г‚’ж­ЈгЃ®еЂ¤гЃ«е¤‰жЏ›гЃ—гЃџ)walletг‚’еј•ж•°гЃ«жёЎгЃ™гЂ‚
+       [if (savings > 0)                ;; г‚‚гЃ—гЂЃsavingsгЃЊ0г‚€г‚Ље¤§гЃЌгЃ„гЃ‹гѓЃг‚§гѓѓг‚ЇгЃ—...(9)
+          [withdraw-from-savings savings]   ;; (9)гЃЊзњџгЃ§гЃ‚г‚‹гЃЄг‚‰гЃ°гЂЃwithdraw-from-savingsй–ўж•°(еј•ж•°гЃ®й‡‘йЎЌе€†гЂЃwalletгЃ«и¶ігЃ—гЂЃsavingгЃ‹г‚‰еј•гЃЏ)г‚’е®џиЎЊгЃ™г‚‹гЂ‚гЃ“гЃ®гЃЁгЃЌгЂЃ(иІ гЃ®еЂ¤г‚’ж­ЈгЃ®еЂ¤гЃ«е¤‰жЏ›гЃ—гЃџ)walletг‚’еј•ж•°гЃ«жёЎгЃ™гЂ‚
 
-        set temp-loan bank-to-loan          ;;temp-loan = amount available to borrow ;; temp-loan‚Йbank-to-loan‚р“ь‚к‚йЃB
-        ifelse (temp-loan >= (- wallet))    ;; temp-loan‚ЄЃi•‰‚М’l‚рђі‚М’l‚Й•ПЉ·‚µ‚Ѕ)wallet€ИЏг‚Е‚ ‚й‚©ѓ`ѓFѓbѓN‚µЃA...(10)
-          [take-out-loan (- wallet)]        ;; (10)‚Єђ^‚Е‚ ‚й‚И‚з‚ОЃAtake-out-loanЉЦђ”(€шђ”‚М‹аЉz•ЄЃAloans‚Жwallet‚Й‘«‚µЃAbank-to-loan‚©‚з€ш‚­)‚рЋАЌs‚·‚йЃB‚±‚М‚Ж‚«ЃA(•‰‚М’l‚рђі‚М’l‚Й•ПЉ·‚µ‚Ѕ)wallet‚р€шђ”‚Й“n‚·ЃB
-          [take-out-loan temp-loan]         ;; (10)‚Є•‰‚Е‚ ‚й‚И‚з‚ОЃAtake-out-loanЉЦђ”(€шђ”‚М‹аЉz•ЄЃAloans‚Жwallet‚Й‘«‚µЃAbank-to-loan‚©‚з€ш‚­)‚рЋАЌs‚·‚йЃB‚±‚М‚Ж‚«ЃA(•‰‚М’l‚рђі‚М’l‚Й•ПЉ·‚µ‚Ѕ)wallet‚р€шђ”‚Й“n‚·
+        set temp-loan bank-to-loan          ;;temp-loan = amount available to borrow ;; temp-loanгЃ«bank-to-loanг‚’е…Ґг‚Њг‚‹гЂ‚
+        ifelse (temp-loan >= (- wallet))    ;; temp-loanгЃЊпј€иІ гЃ®еЂ¤г‚’ж­ЈгЃ®еЂ¤гЃ«е¤‰жЏ›гЃ—гЃџ)walletд»ҐдёЉгЃ§гЃ‚г‚‹гЃ‹гѓЃг‚§гѓѓг‚ЇгЃ—гЂЃ...(10)
+          [take-out-loan (- wallet)]        ;; (10)гЃЊзњџгЃ§гЃ‚г‚‹гЃЄг‚‰гЃ°гЂЃtake-out-loanй–ўж•°(еј•ж•°гЃ®й‡‘йЎЌе€†гЂЃloansгЃЁwalletгЃ«и¶ігЃ—гЂЃbank-to-loanгЃ‹г‚‰еј•гЃЏ)г‚’е®џиЎЊгЃ™г‚‹гЂ‚гЃ“гЃ®гЃЁгЃЌгЂЃ(иІ гЃ®еЂ¤г‚’ж­ЈгЃ®еЂ¤гЃ«е¤‰жЏ›гЃ—гЃџ)walletг‚’еј•ж•°гЃ«жёЎгЃ™гЂ‚
+          [take-out-loan temp-loan]         ;; (10)гЃЊиІ гЃ§гЃ‚г‚‹гЃЄг‚‰гЃ°гЂЃtake-out-loanй–ўж•°(еј•ж•°гЃ®й‡‘йЎЌе€†гЂЃloansгЃЁwalletгЃ«и¶ігЃ—гЂЃbank-to-loanгЃ‹г‚‰еј•гЃЏ)г‚’е®џиЎЊгЃ™г‚‹гЂ‚гЃ“гЃ®гЃЁгЃЌгЂЃ(иІ гЃ®еЂ¤г‚’ж­ЈгЃ®еЂ¤гЃ«е¤‰жЏ›гЃ—гЃџ)walletг‚’еј•ж•°гЃ«жёЎгЃ™
        ]
      ]
     [deposit-to-savings wallet]
