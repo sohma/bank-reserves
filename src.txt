@@ -177,13 +177,13 @@ end
 
 ;; プロット用のグローバル変数を更新する関数
 to bank-balance-sheet ;;update monitors                         ;; モニター(プロット)更新
-  ifelse (back-profit = true)
-    [set bank-deposits ((sum [savings] of turtles) + bank-profit)]
-    [set bank-deposits (sum [savings] of turtles)]              ;; turtleのsavingsの合計をbank-depositsグローバル変数に入れる
+  set bank-deposits (sum [savings] of turtles)                  ;; turtleのsavingsの合計をbank-depositsグローバル変数に入れる
   set bank-loans sum [loans] of turtles                         ;; turtleのloansの合計をbank-loansに入れる
   set bank-interest-loans sum [interest-loans] of turtles
   set bank-reserves (reserves / 100) * bank-deposits            ;; bank-depositsグローバル変数 ｘ (スライダーの)reservesグローバル変数(%)をbank-reservesグローバル変数に入れる
-  set bank-to-loan bank-deposits - (bank-reserves + bank-loans) ;; bank-depositsグローバル変数 から bank-reservesグローバル変数とbank-loansグローバル変数を引き、bank-to-loansグローバル変数に入れる
+  ifelse (back-profit = true)                                   ;; back-profitスイッチがONであるかチェックし、
+    [set bank-to-loan (bank-deposits - (bank-reserves + bank-loans) + bank-profit)]  ;; bank-profitをbank-to-loan に足す
+    [set bank-to-loan (bank-deposits - (bank-reserves + bank-loans))] ;; bank-depositsグローバル変数 から bank-reservesグローバル変数とbank-loansグローバル変数を引き、bank-to-loansグローバル変数に入れる
 end
 
 

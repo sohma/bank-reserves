@@ -177,13 +177,13 @@ end
 
 ;; プロット用のグローバル変数を更新する関数
 to bank-balance-sheet ;;update monitors                         ;; モニター(プロット)更新
-  ifelse (back-profit = true)
-    [set bank-deposits ((sum [savings] of turtles) + bank-profit)]
-    [set bank-deposits (sum [savings] of turtles)]              ;; turtleのsavingsの合計をbank-depositsグローバル変数に入れる
+  set bank-deposits (sum [savings] of turtles)                  ;; turtleのsavingsの合計をbank-depositsグローバル変数に入れる
   set bank-loans sum [loans] of turtles                         ;; turtleのloansの合計をbank-loansに入れる
   set bank-interest-loans sum [interest-loans] of turtles
   set bank-reserves (reserves / 100) * bank-deposits            ;; bank-depositsグローバル変数 ｘ (スライダーの)reservesグローバル変数(%)をbank-reservesグローバル変数に入れる
-  set bank-to-loan bank-deposits - (bank-reserves + bank-loans) ;; bank-depositsグローバル変数 から bank-reservesグローバル変数とbank-loansグローバル変数を引き、bank-to-loansグローバル変数に入れる
+  ifelse (back-profit = true)                                   ;; back-profitスイッチがONであるかチェックし、
+    [set bank-to-loan (bank-deposits - (bank-reserves + bank-loans) + bank-profit)]  ;; bank-profitをbank-to-loan に足す
+    [set bank-to-loan (bank-deposits - (bank-reserves + bank-loans))] ;; bank-depositsグローバル変数 から bank-reservesグローバル変数とbank-loansグローバル変数を引き、bank-to-loansグローバル変数に入れる
 end
 
 
@@ -298,10 +298,10 @@ ticks
 30.0
 
 SLIDER
-138
-84
-260
-117
+137
+52
+259
+85
 people
 people
 0.0
@@ -313,10 +313,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-2
-84
-137
-117
+1
+52
+136
+85
 reserves
 reserves
 0.0
@@ -328,10 +328,10 @@ NIL
 HORIZONTAL
 
 BUTTON
+37
+10
+126
 47
-41
-136
-78
 setup
 setup
 NIL
@@ -345,10 +345,10 @@ NIL
 1
 
 BUTTON
-149
-41
-236
-78
+145
+10
+232
+47
 go
 go
 T
@@ -362,10 +362,10 @@ NIL
 0
 
 PLOT
-4
-350
-247
-548
+3
+362
+246
+560
 Money & Loans
 Time
 Mny + Lns
@@ -384,10 +384,10 @@ PENS
 "bank-profit" 1.0 0 -6459832 true "" "plot bank-profit"
 
 MONITOR
-144
-173
-259
-218
+143
+141
+258
+186
 Wallets Total
 wallets-total
 2
@@ -395,10 +395,10 @@ wallets-total
 11
 
 MONITOR
-144
-124
-259
-169
+143
+92
+258
+137
 Savings Total
 savings-total
 2
@@ -406,10 +406,10 @@ savings-total
 11
 
 MONITOR
-144
-222
-259
-267
+143
+190
+258
+235
 Loans Total
 loans-total
 2
@@ -417,10 +417,10 @@ loans-total
 11
 
 MONITOR
-19
-124
-144
-169
+18
+92
+143
+137
 Money Total
 money-total
 2
@@ -428,10 +428,10 @@ money-total
 11
 
 MONITOR
-19
-222
-144
-267
+18
+190
+143
+235
 Bank Reserves
 bank-reserves
 2
@@ -439,10 +439,10 @@ bank-reserves
 11
 
 MONITOR
-19
-173
-144
-218
+18
+141
+143
+186
 Bank to Loan
 bank-to-loan
 2
@@ -450,10 +450,10 @@ bank-to-loan
 11
 
 PLOT
-250
-350
-510
-548
+249
+362
+509
+560
 Savings & Wallets
 Time
 Svngs + Wllts
@@ -489,10 +489,10 @@ PENS
 "poor" 1.0 0 -2674135 true "" "plot poor"
 
 PLOT
-514
-350
-827
-548
+513
+362
+826
+560
 Wealth Distribution Histogram
 poor <--------> rich
 People
@@ -508,9 +508,9 @@ PENS
 
 SLIDER
 139
-271
-260
-304
+286
+256
+319
 interest-rate
 interest-rate
 0
@@ -523,9 +523,9 @@ HORIZONTAL
 
 SLIDER
 139
-307
-260
-340
+322
+256
+355
 target
 target
 0
@@ -538,9 +538,9 @@ HORIZONTAL
 
 SWITCH
 33
-307
+322
 136
-340
+355
 gramin
 gramin
 1
@@ -549,14 +549,36 @@ gramin
 
 SWITCH
 32
-271
+286
 137
-304
+319
 back-profit
 back-profit
 0
 1
 -1000
+
+MONITOR
+18
+238
+143
+283
+Bank interest loans
+bank-interest-loans
+0
+1
+11
+
+MONITOR
+143
+238
+258
+283
+Bank profit
+bank-profit
+0
+1
+11
 
 @#$#@#$#@
 ## WHAT IS IT?
