@@ -224,11 +224,12 @@ end
 
 to repay-a-interest-loans [amount]
   ifelse interest-loans >= amount
-      [set bank-profit (bank-profit + (interest-loans - amount))
+      [set bank-profit (bank-profit + amount)
        set interest-loans interest-loans - amount
       ]
       [set loans (loans - (amount - interest-loans))
        set bank-to-loan (bank-to-loan + (amount - interest-loans))
+       set loans (loans - (amount - interest-loans))
        set bank-profit (bank-profit + interest-loans)
        set interest-loans 0
       ]
