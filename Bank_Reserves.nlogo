@@ -77,6 +77,7 @@ end
 to get-shape  ;;turtle procedure        ;; あるturtleの処理
   if (savings > 10)  [set color green]  ;; もし、savingsが10以上であるならば、turtleの色を緑にする
   if ((loans + interest-loans) > 10) [set color red]       ;; もし、loansが10以上であるならば、turtleの色を赤にする
+  if (savings <= 10 and (loans + interest-loans) <= 10) [set color blue]
   set wealth (savings - (loans + interest-loans))          ;; wealth変数
 end
 
@@ -189,7 +190,8 @@ end
 
 ;; 利子を計算しローンを増やす
 to interest_to_loans ;; fundamental proocedures
-  set interest-loans interest-loans + round ((loans + interest-loans) * (interest-rate / 100.0))    ;;
+  if ((gramin = false) or ((loans + interest-loans) < target))   ;; gramin スイッチがoff もしくは、gramin スイッチがONで、且つ targetスライダーの金額以下の場合、
+    [set interest-loans interest-loans + round ((loans + interest-loans) * (interest-rate / 100.0))]    ;; (元本 + 利子) * 金利
 end
 
 ;; プロット(Money & Loans)で使用するinterestの合計を計算する関数
@@ -485,7 +487,7 @@ true
 "set-plot-x-range 0 x-max\nset-plot-y-range 0 (count turtles)" ""
 PENS
 "rich" 1.0 0 -10899396 true "" "plot rich"
-"middle" 1.0 0 -16777216 true "" "plot middle-class"
+"middle" 1.0 0 -14730904 true "" "plot middle-class"
 "poor" 1.0 0 -2674135 true "" "plot poor"
 
 PLOT
@@ -515,7 +517,7 @@ interest-rate
 interest-rate
 0
 5
-4.0
+2.0
 1
 1
 NIL
@@ -530,7 +532,7 @@ target
 target
 0
 100
-0.0
+15.0
 1
 1
 NIL
