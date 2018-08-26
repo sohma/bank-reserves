@@ -70,14 +70,14 @@ to initialize-variables
   set rich 0                            ;; richグローバル変数の初期化
   set middle-class 0                    ;; middle-classグローバル変数の初期化
   set poor 0                            ;; poorグローバル変数の初期化
-  set rich-threshold 10                 ;; rich-thresholdグローバル変数の初期化
+  set rich-threshold 10000                 ;; rich-thresholdグローバル変数の初期化
 end
 
 ;; turtleの色をsavings, loansの値に応じて変更する関数
 to get-shape  ;;turtle procedure        ;; あるturtleの処理
-  if (savings > 10)  [set color green]  ;; もし、savingsが10以上であるならば、turtleの色を緑にする
-  if ((loans + interest-loans) > 10) [set color red]       ;; もし、loansが10以上であるならば、turtleの色を赤にする
-  if (savings <= 10 and (loans + interest-loans) <= 10) [set color blue]
+  if (savings > 10000)  [set color green]  ;; もし、savingsが10以上であるならば、turtleの色を緑にする
+  if ((loans + interest-loans) > 10000) [set color red]       ;; もし、loansが10以上であるならば、turtleの色を赤にする
+  if (savings <= 10000 and (loans + interest-loans) <= 10000) [set color blue]
   set wealth (savings - (loans + interest-loans))          ;; wealth変数
 end
 
@@ -106,8 +106,6 @@ to go
            ]
         ]                                                  ;; (101)の範囲の終了
       ]                                                    ;; (2)の範囲の終了
-      ;;print "wallet"
-      ;;show wallet
     ]                                                      ;; (1)の範囲の終了
 
   tick                                                     ;; tickでシミュレーションを1つ進める
@@ -123,10 +121,10 @@ to do-business  ;;turtle procedure      ;; あるturtleの処理
      if customer != nobody              ;; もし、customerがnobodyと等しくないかチェックし...(4)
      [if (random 2) = 0                 ;; 50% chance of trading with customer ;; もし、(4)が真である場合、ランダムに0～2よりも小さい値({0,1}) を生成し、0であるかチェックし...(5)(すなわち50%の確率で)
            [ifelse (random 2) = 0       ;; 50% chance of trading $5 or $2      ;; (5)が真である場合、ランダムに0～2よりも小さい値({0,1})を生成し、0であるかチェックし...(6)(すなわち50%の確率で)
-              [ask customer [set wallet wallet + 5] ;;give 5 to customer       ;; (6)が真である場合、customerのwalletに5を足す
-               set wallet (wallet - 5) ];;take 5 from wallet                   ;; 上記の条件の続きで、自身のwalletから5を引く
-              [ask customer [set wallet wallet + 2] ;;give 2 to customer       ;; (6)が偽である場合、customerのwalletに2を足す
-               set wallet (wallet - 2) ];;take 2 from wallet                   ;; 上記の条件の続きで、自身のwalletから2を引く
+              [ask customer [set wallet wallet + 5000] ;;give 5 to customer       ;; (6)が真である場合、customerのwalletに5を足す
+               set wallet (wallet - 5000) ];;take 5 from wallet                   ;; 上記の条件の続きで、自身のwalletから5を引く
+              [ask customer [set wallet wallet + 2000] ;;give 2 to customer       ;; (6)が偽である場合、customerのwalletに2を足す
+               set wallet (wallet - 2000) ];;take 2 from wallet                   ;; 上記の条件の続きで、自身のwalletから2を引く
            ]                            ;; (5)の範囲の終了
         ]                               ;; (4)の範囲の終了
      ]                                  ;; (3)の範囲の終了
@@ -182,7 +180,7 @@ to bank-balance-sheet ;;update monitors                         ;; モニター(
   set bank-loans sum [loans] of turtles                         ;; turtleのloansの合計をbank-loansに入れる
   set bank-interest-loans sum [interest-loans] of turtles
   set bank-reserves (reserves / 100) * bank-deposits            ;; bank-depositsグローバル変数 ｘ (スライダーの)reservesグローバル変数(%)をbank-reservesグローバル変数に入れる
-  ifelse (back-profit = true)                                   ;; back-profitスイッチがONであるかチェックし、
+  ifelse (return-profit = true)                                   ;; return-profitスイッチがONであるかチェックし、
     [set bank-to-loan (bank-deposits - (bank-reserves + bank-loans) + bank-profit)]  ;; bank-profitをbank-to-loan に足す
     [set bank-to-loan (bank-deposits - (bank-reserves + bank-loans))] ;; bank-depositsグローバル変数 から bank-reservesグローバル変数とbank-loansグローバル変数を引き、bank-to-loansグローバル変数に入れる
 end
@@ -190,8 +188,13 @@ end
 
 ;; 利子を計算しローンを増やす
 to interest_to_loans ;; fundamental proocedures
-  if ((gramin = false) or ((loans + interest-loans) < target))   ;; gramin スイッチがoff もしくは、gramin スイッチがONで、且つ targetスライダーの金額以下の場合、
-    [set interest-loans interest-loans + round ((loans + interest-loans) * (interest-rate / 100.0))]    ;; (元本 + 利子) * 金利
+  if (return-profit = true)
+    [if ((gramin = false) or ((loans + interest-loans) < target))   ;; gramin スイッチがoff もしくは、gramin スイッチがONで、且つ targetスライダーの金額以下の場合、
+      [ifelse interest-loans >= 0
+        [set interest-loans interest-loans + round ((loans + interest-loans) * (interest-rate / 100.0))]    ;; (元本 + 利子) * 金利
+        [set interest-loans 0]
+      ]
+    ]
 end
 
 ;; プロット(Money & Loans)で使用するinterestの合計を計算する関数
@@ -517,8 +520,8 @@ interest-rate
 interest-rate
 0
 5
-2.0
-1
+3.0
+0.1
 1
 NIL
 HORIZONTAL
@@ -531,31 +534,31 @@ SLIDER
 target
 target
 0
-100
-15.0
-1
+100000
+40000.0
+1000
 1
 NIL
 HORIZONTAL
 
 SWITCH
-33
+18
 322
-136
+139
 355
 gramin
 gramin
-1
+0
 1
 -1000
 
 SWITCH
-32
+18
 286
-137
+140
 319
-back-profit
-back-profit
+return-profit
+return-profit
 0
 1
 -1000
