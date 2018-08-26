@@ -189,7 +189,7 @@ end
 ;; 利子を計算しローンを増やす
 to interest_to_loans ;; fundamental proocedures
   if (return-profit = true)
-    [if ((gramin = false) or ((loans + interest-loans) < target))   ;; gramin スイッチがoff もしくは、gramin スイッチがONで、且つ targetスライダーの金額以下の場合、
+    [if ((Grameen = false) or ((loans + interest-loans) < target))   ;; gramin スイッチがoff もしくは、gramin スイッチがONで、且つ targetスライダーの金額以下の場合、
       [ifelse interest-loans >= 0
         [set interest-loans interest-loans + round ((loans + interest-loans) * (interest-rate / 100.0))]    ;; (元本 + 利子) * 金利
         [set interest-loans 0]
@@ -535,7 +535,7 @@ target
 target
 0
 100000
-40000.0
+14000.0
 1000
 1
 NIL
@@ -546,8 +546,8 @@ SWITCH
 322
 139
 355
-gramin
-gramin
+Grameen
+Grameen
 0
 1
 -1000
