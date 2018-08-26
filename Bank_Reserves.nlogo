@@ -271,6 +271,13 @@ to-report money-total
   report sum [wallet + savings] of turtles       ;; turtleのwalletとsavingsを合計する
 end
 
+to-report to-max-wealth
+  report max [wealth] of turtles
+end
+
+to-report to-min-wealth
+  report min [wealth] of turtles
+end
 
 ; Copyright 1998 Uri Wilensky.
 ; See Info tab for full copyright and license.
@@ -367,10 +374,10 @@ NIL
 0
 
 PLOT
-3
-362
-246
-560
+4
+366
+302
+564
 Money & Loans
 Time
 Mny + Lns
@@ -455,10 +462,10 @@ bank-to-loan
 11
 
 PLOT
-249
-362
-509
-560
+305
+365
+576
+563
 Savings & Wallets
 Time
 Svngs + Wllts
@@ -474,10 +481,10 @@ PENS
 "wallets" 1.0 0 -10899396 true "" "plot wallets-total"
 
 PLOT
-581
-144
-844
-342
+582
+84
+845
+282
 Income Dist
 Time
 People
@@ -494,10 +501,10 @@ PENS
 "poor" 1.0 0 -2674135 true "" "plot poor"
 
 PLOT
-513
-362
-826
-560
+584
+364
+842
+562
 Wealth Distribution Histogram
 poor <--------> rich
 People
@@ -506,10 +513,10 @@ People
 0.0
 57.0
 false
-false
+true
 "set-plot-y-range 0 (count turtles)" ""
 PENS
-"hist" 1.0 0 -13345367 true "" "if( ticks mod 10 = 1 ) [\n  let max-wealth max [wealth] of turtles\n  let min-wealth min [wealth] of turtles\n  let one-fifth-wealth 0.2 * (max-wealth - min-wealth)\n  let num-bins 10\n  let index 1\n  let interval round ((plot-x-max - plot-x-min) / num-bins)\n  plot-pen-reset\n  repeat num-bins [\n    plotxy ((index - 1) * interval + 0.002)\n                 (count turtles with [\n                      wealth < (min-wealth + index * one-fifth-wealth) and\n                      wealth >= (min-wealth + (index - 1) * one-fifth-wealth)\n                  ]\n                 )\n\n    plotxy  (index * interval)\n                 (count turtles with [\n                      wealth < (min-wealth + index * one-fifth-wealth) and\n                      wealth >= (min-wealth + (index - 1) * one-fifth-wealth)\n                  ]\n                 )\n\n    plotxy (index * interval + 0.001) 0\n    set index index + 1\n  ]\n]"
+"hist" 1.0 1 -13345367 true "" "if( ticks mod 10 = 1 ) [\n  let max-wealth max [wealth] of turtles\n  let min-wealth min [wealth] of turtles\n  let one-fifth-wealth 0.2 * (max-wealth - min-wealth)\n  let num-bins 10\n  let index 1\n  let interval round ((plot-x-max - plot-x-min) / num-bins)\n  plot-pen-reset\n  repeat num-bins [\n    plotxy ((index - 1) * interval + 0.002)\n                 (count turtles with [\n                      wealth < (min-wealth + index * one-fifth-wealth) and\n                      wealth >= (min-wealth + (index - 1) * one-fifth-wealth)\n                  ]\n                 )\n\n    plotxy  (index * interval)\n                 (count turtles with [\n                      wealth < (min-wealth + index * one-fifth-wealth) and\n                      wealth >= (min-wealth + (index - 1) * one-fifth-wealth)\n                  ]\n                 )\n\n    plotxy (index * interval + 0.001) 0\n    set index index + 1\n  ]\n]"
 
 SLIDER
 139
@@ -582,6 +589,28 @@ MONITOR
 Bank profit
 bank-profit
 0
+1
+11
+
+MONITOR
+723
+311
+843
+356
+Max wealth
+to-max-wealth
+17
+1
+11
+
+MONITOR
+583
+311
+702
+356
+Min wealth
+to-min-wealth
+17
 1
 11
 
