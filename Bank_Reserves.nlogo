@@ -615,6 +615,19 @@ to-min-wealth
 11
 
 @#$#@#$#@
+## Neo bank reservation
+
+## About the new model "New bank preparation"
+
+"Neo bank reservation" is a new model which added some functions to existing model "bank reservation". "Bank reservation" can simulate the credit creation function of the bank. The bank credit creation function refers to the function of revitalizing the market by creating economic activities that are actually larger than the amount actually held by the bank by the bank lending the deposit and repeating the collection. "Bank preparation" increases or decreases the amount of money put on the market by increasing or decreasing the funds the bank holds in preparation for withdrawal of cash from customers, that is, the reserve for bank reserves, which increases or decreases the bank deposit and loan amount , And a model to simulate the effect on the financial situation of each project.
+"Neo Bank Reservation" is a model by adding some new functions to this "bank reservation". Adding closer to the real world, but adding a function to collect interest when repaying loans. This interest revenue is charged to the loan resources by operation of the switch. In addition, because banks are carrying out business with various features in the real world, we added one to pursue banks that do microfinance projects in the "Neo Bank reservation" model. While there is a met such that economic activity is activated by the credit creation function of the bank, on the other hand, considering the merit when expanding the gap between rich and poor, add a bank that runs microfinance business for the poor such as Grameen Bank So that we can simulate the effect of decreasing the poor.
+
+## How to use "Neo Bank Reserves"
+
+Set the percentage of bank reserves with the Reserves slider. Set the number of agents participating in the transaction with the People slider. You can reset the model with the Setup button. Use the Go button to start and stop the model. In each window of Money Total, Savings Total, Loans total, Bank to Loan, Wallet Total, Bank Reserves, the total amount of money in the model, the balance of the deposit, the balance of the loan, the amount the bank can lend, the total amount of the agent's wallets, You can check the bank reserve amount. In addition, we can observe the trend of each balance with indicators of Money and Loans, Savings and Wallets. In the income distribution, the transition of rich, poor, and middle-class layers, and the indicator of Wealth distribution, which layer the wealth concentrates on Can be observed. The new window Bank interest loans represents the total debt amount of the agent which combined the borrowing principal and interest. Also, in the Bank profit window, you can check the sum of the loan interest earned by the bank. Among the four new functions, the interest-rate slider allows you to set the interest rate on the loan. Also, if you turn on back profit, the profit from the lending rate is added to Bank-to-Loan. Grameen Bank Additional Function When you turn on the Grameen switch, you can borrow money without interest to agents whose borrowing amount is equal to or more than the amount of the target slider.
+
+
+## Old Model
 ## WHAT IS IT?
 
 This program models the creation of money in an economy through a private banking system. As most of the money in the economy is kept in banks but only little of it needs to be used (i.e. in cash form) at any one time, the banks need only keep a small portion of their savings on-hand for those transactions. This portion of the total savings is known as the banks' reserves.
