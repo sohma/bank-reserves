@@ -6,8 +6,8 @@ globals [
   bank-deposits                         ;; turtles の savings の合計
   bank-to-loan                          ;; 銀行が保有している資金のうち、貸出に充てることができる額（余裕資金）
   bank-interest                         ;; 銀行が保有している資金のうち、利子で設けた利益
-  bank-interest-loans                   ;; 追加:
-  bank-profit                           ;; 追加
+  bank-interest-loans                   ;; 銀行が貸付つけたローンのうち、利子分
+  bank-profit                           ;; 銀行が利子分を回収して得た利益
   x-max                                 ;; プロット("Money & Loans", "Savings & Wallets", "Income Dist")の表示のX軸の最大値 (初期値 300, プロットの式:set-plot-x-range 0 x-max)
   y-max                                 ;; プロット("Money & Loans", "Savings & Wallets")の表示のY軸の最大値 (初期値: 2 * money-total, プロットの式: set-plot-y-range -50 y-max)
   rich                                  ;; プロット("Income Dist")のrichの数 (プロットの式: plot rich)
@@ -24,7 +24,6 @@ turtles-own [
   interest-loans                        ;; turtle の loansのうち利子分
   wallet                                ;; turtle の wallet 属性
   temp-loan                             ;; balance-books関数等で使用する属性。temp-loan = amount available to borrow
-  temp-amount
   wealth                                ;; savings - loansの値を持つ属性。プロット("Wealth Distribution Histogram")でヒストグラムを作るのに利用される。
   customer                              ;; do-business関数で利用する属性。turtle自身の現在地に他のturtleがいるかどうかを表わす(one-of other turtles-here)。
 ]
@@ -50,7 +49,7 @@ to setup-turtles  ;; turtle procedure   ;; あるturtleの処理
   set wallet (random rich-threshold) + 1 ;;limit money to threshold ;; walletを1 ～ 10(rich-threshold)までの間で初期化する
   set savings 0                         ;; savings 属性の初期化
   set loans 0                           ;; loans 属性の初期化
-  set interest-loans 0
+  set interest-loans 0                  ;; interest-loans属性の初期化
   set wealth 0                          ;; wealth 属性の初期化
   set customer -1                       ;; customer 属性の初期化 (-1: 他のturtleが同じ場所にはいない)
 end
@@ -61,8 +60,8 @@ to setup-bank ;;initialize bank
   set bank-reserves 0                   ;; bank-reservesグローバル変数の初期化
   set bank-deposits 0                   ;; bank-depositsグローバル変数の初期化
   set bank-to-loan 0                    ;; bank-to-loanグローバル変数の初期化
-  set bank-interest-loans 0             ;; 追加
-  set bank-profit 0                     ;; 追加
+  set bank-interest-loans 0             ;; bank-interest-loansグローバル変数の初期化
+  set bank-profit 0                     ;; bank-profitグローバル変数の初期化
 end
 
 ;; プロットに関する変数の初期化の関数
@@ -70,14 +69,14 @@ to initialize-variables
   set rich 0                            ;; richグローバル変数の初期化
   set middle-class 0                    ;; middle-classグローバル変数の初期化
   set poor 0                            ;; poorグローバル変数の初期化
-  set rich-threshold 10000                 ;; rich-thresholdグローバル変数の初期化
+  set rich-threshold 10000              ;; rich-thresholdグローバル変数の初期化
 end
 
 ;; turtleの色をsavings, loansの値に応じて変更する関数
 to get-shape  ;;turtle procedure        ;; あるturtleの処理
   if (savings > 10000)  [set color green]  ;; もし、savingsが10以上であるならば、turtleの色を緑にする
   if ((loans + interest-loans) > 10000) [set color red]       ;; もし、loansが10以上であるならば、turtleの色を赤にする
-  if (savings <= 10000 and (loans + interest-loans) <= 10000) [set color blue]
+  if (savings <= 10000 and (loans + interest-loans) <= 10000) [set color blue] ;; もし、savingsとloans+interest-loansが10以下なら色を青にする
   set wealth (savings - (loans + interest-loans))          ;; wealth変数
 end
 
@@ -101,12 +100,12 @@ to go
           get-shape]                                       ;; (2)が真である場合、get-shape関数を実行する
          [ifelse ticks mod 4 = 2                           ;; 追加: 4回に１回(月末)に利子を増やすための分岐..(101)
            [bank-balance-sheet] ;;third cycle, "bank balance sheet" ;; 上記以外(ticks数を3で割り余りが2である場合、bank-balance-sheet関数を実行する
-           [if ticks mod 5 = 0
-             [interest_to_loans]                             ;; interest_to_loans関数(スライダーのinterest変数の率だけローンを増やす)を実行する
-           ]
-        ]                                                  ;; (101)の範囲の終了
-      ]                                                    ;; (2)の範囲の終了
-    ]                                                      ;; (1)の範囲の終了
+           [if ticks mod 5 = 0                             ;; 20 ticksに１回実行するように5で割りるかチェックし...(102)
+             [interest_to_loans]                           ;; interest_to_loans関数(スライダーのinterest変数の率だけローンを増やす)を実行する
+           ]                                               ;; (101)の範囲の終了
+        ]                                                  ;; (2)の範囲の終了
+      ]                                                    ;; (1)の範囲の終了
+    ]                                                      ;; askの範囲の終了
 
   tick                                                     ;; tickでシミュレーションを1つ進める
 end
@@ -147,7 +146,7 @@ to balance-books
        [if (savings > 0)                    ;; もし、savingsが0より大きいかチェックし...(9)
           [withdraw-from-savings savings]   ;; (9)が真であるならば、withdraw-from-savings関数(引数の金額分、walletに足し、savingから引く)を実行する。このとき、(負の値を正の値に変換した)savingsを引数に渡す
 
-        if (bank-to-loan > 0)
+        if (bank-to-loan > 0)                 ;; bank-to-loan が 0 以上であるかチェックし、
         [
           set temp-loan bank-to-loan          ;;temp-loan = amount available to borrow ;; temp-loanにbank-to-loanを入れる
           ifelse (temp-loan >= (- wallet))    ;; temp-loanが（負の値を正の値に変換した)wallet以上であるかチェックし、 ...(10)
@@ -158,7 +157,7 @@ to balance-books
      ]
     [deposit-to-savings wallet]         ;; (7)が偽であるならば、deposit-to-savings関数(引数の金額分、walletから引き、savingsに足す)を実行する。このときwalletを引数に渡す
   if ((loans + interest-loans) > 0 and savings > 0)            ;; when there is money in savings to payoff loan ;; もし、loansとsavingsが0より大きいかチェックし...(11)
-    [ifelse (savings >= (loans + interest-loans)) ;; (11)が真であるならば、savingsが(loans * (1.00 + interest/100))以上であることをチェックし、 ...(12)
+    [ifelse (savings >= (loans + interest-loans))              ;; (11)が真であるならば、savingsが(loans * (1.00 + interest/100))以上であることをチェックし、 ...(12)
        [withdraw-from-savings (loans + interest-loans)         ;; (12)が真であるならば、withdraw-from-savings関数(引数の金額分、walletに足し、savingから引く)を実行する。このとき、(負の値を正の値に変換した)walletを引数に渡す
         repay-a-loan (loans + interest-loans)]                 ;; 上記の続きで、repay-a-loan関数関数(引数の金額分 loansとwalletから引き、bank-to-loanに足す)を実行する。このとき、loansを引数に渡す
        [withdraw-from-savings savings       ;; (13)が偽であるならば、withdraw-from-savings関数(引数の金額分、walletに足し、savingから引く)を実行する。このとき、savingsを引数に渡す
@@ -178,7 +177,7 @@ end
 to bank-balance-sheet ;;update monitors                         ;; モニター(プロット)更新
   set bank-deposits (sum [savings] of turtles)                  ;; turtleのsavingsの合計をbank-depositsグローバル変数に入れる
   set bank-loans sum [loans] of turtles                         ;; turtleのloansの合計をbank-loansに入れる
-  set bank-interest-loans sum [interest-loans] of turtles
+  set bank-interest-loans sum [interest-loans] of turtles       ;; turtleのinterest-loansの合計をbank-interest-loansに入れる
   set bank-reserves (reserves / 100) * bank-deposits            ;; bank-depositsグローバル変数 ｘ (スライダーの)reservesグローバル変数(%)をbank-reservesグローバル変数に入れる
   ifelse (return-profit = true)                                   ;; return-profitスイッチがONであるかチェックし、
     [set bank-to-loan (bank-deposits - (bank-reserves + bank-loans) + bank-profit)]  ;; bank-profitをbank-to-loan に足す
@@ -190,16 +189,16 @@ end
 to interest_to_loans ;; fundamental proocedures
   if (return-profit = true)
     [if ((Grameen = false) or ((loans + interest-loans) < target))   ;; gramin スイッチがoff もしくは、gramin スイッチがONで、且つ targetスライダーの金額以下の場合、
-      [ifelse interest-loans >= 0
+      [ifelse interest-loans >= 0                                    ;; interest-loansが0より大きいかチェックする。誤差でマイナスになっている場合、マイナス方向に増加するのを防ぐため
         [set interest-loans interest-loans + round ((loans + interest-loans) * (interest-rate / 100.0))]    ;; (元本 + 利子) * 金利
-        [set interest-loans 0]
+        [set interest-loans 0]                                       ;; interest-loansが0以下になるのは誤差のときであるため、0で補正する
       ]
     ]
 end
 
 ;; プロット(Money & Loans)で使用するinterestの合計を計算する関数
 to-report interest-total
-  report sum [interest-loans] of turtles                  ;; turtleのloansを合計する
+  report sum [interest-loans] of turtles                        ;; turtleのloansを合計する
 end
 
 
@@ -218,25 +217,23 @@ end
 
 ;; ローンの返済処理を行う関数
 to repay-a-loan [amount] ;;fundamental procedures               ;; 各箇所で呼ばれる関数
-  ifelse interest-loans > 0
-    [repay-a-interest-loans amount]
-    [set loans (loans - amount)                                ;; loans変数から引数amount変数の金額を引く
-     set bank-to-loan (bank-to-loan + amount)
+  ifelse interest-loans > 0                                     ;; interest-loansが 0 以上であるかチェックし、
+    [repay-a-interest-loans amount]                             ;; repay-a-interest-loansを実行する
+    [set loans (loans - amount)                                 ;; loans変数から引数amount変数の金額を引く
+     set bank-to-loan (bank-to-loan + amount)                   ;; bank-to-loanに返済額 amount を足す
     ]
   set wallet (wallet - amount)                                  ;; wallet変数から引数amount変数の金額を引く
-  ;;set bank-to-loan (bank-to-loan + amount)                      ;; bank-to-loanグローバル変数に引数amount変数の金額を足す
 end
 
-to repay-a-interest-loans [amount]
-  ifelse interest-loans >= amount
-      [set bank-profit (bank-profit + amount)
-       set interest-loans interest-loans - amount
+to repay-a-interest-loans [amount]                              ;; interest-loansの返済処理
+  ifelse interest-loans >= amount                               ;; interest-loansが返済額amountより大きいかチェックし、
+      [set bank-profit (bank-profit + amount)                   ;; 大きい場合、bank-profitに返済額amountを足す
+       set interest-loans interest-loans - amount               ;; interest-loansから返済額amountを引く
       ]
-      [set loans (loans - (amount - interest-loans))
-       set bank-to-loan (bank-to-loan + (amount - interest-loans))
-       set loans (loans - (amount - interest-loans))
-       set bank-profit (bank-profit + interest-loans)
-       set interest-loans 0
+      [set loans (loans - (amount - interest-loans))            ;; 小さい場合、loansから、interest-loansから返済額amountを引いた値を引く
+       set bank-to-loan (bank-to-loan + (amount - interest-loans))  ;; bank-to-loansにinterest-loansを足す(interest-loansは全額返済されているため)
+       set bank-profit (bank-profit + interest-loans)           ;; bank-profitにinterest-loansを足す(interest-loansは全額返済されているため)
+       set interest-loans 0                                     ;; interest-loansを0にする(interest-loansは全額返済されているため)
       ]
 end
 
@@ -271,12 +268,14 @@ to-report money-total
   report sum [wallet + savings] of turtles       ;; turtleのwalletとsavingsを合計する
 end
 
+;; プロット(Wealth Distribution Histogram)で使用するwealthの最大値を計算する関数
 to-report to-max-wealth
-  report max [wealth] of turtles
+  report max [wealth] of turtles                 ;; turtlesの最大値を取得する
 end
 
+;; プロット(Wealth Distribution Histogram)で使用するwealthの最小値を計算する関数
 to-report to-min-wealth
-  report min [wealth] of turtles
+  report min [wealth] of turtles                 ;; turtlesの最大値を取得する
 end
 
 ; Copyright 1998 Uri Wilensky.
@@ -542,7 +541,7 @@ target
 target
 0
 100000
-14000.0
+20000.0
 1000
 1
 NIL
